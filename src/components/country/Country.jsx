@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 
-const Country = ({ country, className, handleVisitedCountries }) => {
+const Country = ({
+  country,
+  className,
+  handleVisitedCountries,
+  handleVisitedFlag,
+}) => {
   const [visited, setVisited] = useState(false);
 
-  // console.log(country);
 
   return (
     <div
@@ -63,12 +67,12 @@ const Country = ({ country, className, handleVisitedCountries }) => {
           {visited ? 'Visited' : 'Not Visited'}
         </button>
 
-        {/* <button
+        <button
           onClick={() => handleVisitedFlag(country.flags?.flags?.png)}
           className='btn btn-sm btn-error w-full shadow-lg transition-all hover:shadow-xl'
         >
-          Flags
-        </button> */}
+          Add Flags
+        </button>
       </div>
     </div>
   );

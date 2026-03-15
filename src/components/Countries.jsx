@@ -4,7 +4,7 @@ import Country from './country/Country';
 
 const Countries = ({ countriesPromise }) => {
   const [visitedCountry, setVisitedCountry] = useState([]);
-//   const [visitedFlags, setVisitedFlags] = useState([]);
+    const [visitedFlags, setVisitedFlags] = useState([]);
   //receive data with use
   const countriesData = use(countriesPromise);
   //data destructuring
@@ -19,11 +19,10 @@ const Countries = ({ countriesPromise }) => {
     });
   };
   //visited button eventlistener
-//   const handleVisitedFlag=(flag)=>{
-//     const newVisitedFlags = [...visitedFlags,flag]
-//     setVisitedFlags(newVisitedFlags)
-//   }
-
+    const handleVisitedFlag = flag => {
+      const newVisitedFlags = [...visitedFlags, flag];
+      setVisitedFlags(newVisitedFlags);
+    };
 
   return (
     <div className='min-h-screen bg-linear-to-br from-gray-900 to-gray-800 p-8 py-12'>
@@ -54,7 +53,23 @@ const Countries = ({ countriesPromise }) => {
             </div>
           )}
           {/* Visited Flags */}
-          
+          {visitedFlags.length > 0 && (
+            <div className='mx-auto mt-6 max-w-md'>
+              <h4 className='mb-3 text-center text-lg font-bold text-blue-400'>
+                Visited Flags : {visitedFlags.length}
+              </h4>
+              <div className='flex flex-wrap justify-center gap-4'>
+                {visitedFlags.map((flag, idx) => (
+                  <img
+                    key={idx}
+                    src={flag}
+                    alt='Visited flag'
+                    className='h-12 w-20 rounded object-cover shadow-md transition-transform hover:scale-105'
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Search */}
@@ -94,7 +109,7 @@ const Countries = ({ countriesPromise }) => {
                 key={country.cca3}
                 country={country}
                 handleVisitedCountries={handleVisitedCountries}
-                
+                handleVisitedFlag={handleVisitedFlag}
                 className='overflow-hidden rounded-lg border border-gray-200 shadow-md'
               />
             ))}
