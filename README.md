@@ -1,4 +1,4 @@
-#API => [text](https://openapi.programming-hero.com/api/all)
+#API => [https://openapi.programming-hero.com/api/all]
 
 These are the Programming Hero APIs this project interacts with:
 
