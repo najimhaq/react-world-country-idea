@@ -4,7 +4,8 @@ import Country from './country/Country';
 
 const Countries = ({ countriesPromise }) => {
   const [visitedCountry, setVisitedCountry] = useState([]);
-    const [visitedFlags, setVisitedFlags] = useState([]);
+  const [visitedFlags, setVisitedFlags] = useState([]);
+  const [searchCountry, setSearchCountry] = useState('');
   //receive data with use
   const countriesData = use(countriesPromise);
   //data destructuring
@@ -18,11 +19,32 @@ const Countries = ({ countriesPromise }) => {
       return [...prev, country];
     });
   };
-  //visited button eventlistener
-    const handleVisitedFlag = flag => {
-      const newVisitedFlags = [...visitedFlags, flag];
-      setVisitedFlags(newVisitedFlags);
-    };
+  //visited flag eventlistener
+  const handleVisitedFlag = flag => {
+    setVisitedFlags(prev => {
+      if (prev.includes(flag)) {
+        // আগে থাকলে বাদ দিন
+        return prev.filter(f => f !== flag);
+      }
+      // না থাকলে যোগ করুন
+      return [...prev, flag];
+    });
+  };
+
+  //
+  const filteredCountries = countries.filter(country => {
+    const term = searchCountry.toLowerCase();
+
+    const commonName = country.name?.common?.toLowerCase() || '';
+    const officialName = country.name?.official?.toLowerCase() || '';
+    const capitalName = country.capital?.[0]?.toLowerCase() || '';
+
+    return (
+      commonName.includes(term) ||
+      officialName.includes(term) ||
+      capitalName.includes(term)
+    );
+  });
 
   return (
     <div className='min-h-screen bg-linear-to-br from-gray-900 to-gray-800 p-8 py-12'>
@@ -90,7 +112,13 @@ const Countries = ({ countriesPromise }) => {
               <path d='m21 21-4.3-4.3'></path>
             </g>
           </svg>
-          <input type='search' required placeholder='Search' />
+          <input
+            type='search'
+            required
+            placeholder='Search'
+            value={searchCountry}
+            onChange={e => setSearchCountry(e.target.value.toLowerCase())}
+          />
         </label>
         {/* Suspense */}
         <Suspense
@@ -104,12 +132,13 @@ const Countries = ({ countriesPromise }) => {
           }
         >
           <div className='grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-            {countries.map(country => (
+            {filteredCountries.map(country => (
               <Country
                 key={country.cca3}
                 country={country}
                 handleVisitedCountries={handleVisitedCountries}
                 handleVisitedFlag={handleVisitedFlag}
+                searchCountry={searchCountry}
                 className='overflow-hidden rounded-lg border border-gray-200 shadow-md'
               />
             ))}

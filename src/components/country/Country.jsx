@@ -5,9 +5,9 @@ const Country = ({
   className,
   handleVisitedCountries,
   handleVisitedFlag,
+  searchCountry,
 }) => {
   const [visited, setVisited] = useState(false);
-
 
   return (
     <div
