@@ -5,9 +5,21 @@ const Country = ({
   className,
   handleVisitedCountries,
   handleVisitedFlag,
-  searchCountry,
 }) => {
   const [visited, setVisited] = useState(false);
+  const [flagAdded, setFlagAdded] = useState(false); // নতুন state
+  //toggle flag
+  const toggleFlag = () => {
+    if (flagAdded) {
+      // আগে যোগ করা থাকলে বাদ দিন
+      handleVisitedFlag(country.flags?.flags?.png);
+    } else {
+      // না থাকলে যোগ করুন
+      handleVisitedFlag(country.flags?.flags?.png);
+    }
+    setFlagAdded(!flagAdded); // toggle state
+  };
+
 
   return (
     <div
@@ -68,10 +80,10 @@ const Country = ({
         </button>
 
         <button
-          onClick={() => handleVisitedFlag(country.flags?.flags?.png)}
-          className='btn btn-sm btn-error w-full shadow-lg transition-all hover:shadow-xl'
+          onClick={toggleFlag}
+          className={`btn btn-sm ${flagAdded ? 'btn-success' : 'btn-error'} w-full shadow-lg transition-all hover:shadow-xl`}
         >
-          Add Flags
+          {flagAdded ? 'Flag Added' : 'Add Flag'}
         </button>
       </div>
     </div>

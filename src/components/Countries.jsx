@@ -20,18 +20,22 @@ const Countries = ({ countriesPromise }) => {
     });
   };
   //visited flag eventlistener
-  const handleVisitedFlag = flag => {
-    setVisitedFlags(prev => {
-      if (prev.includes(flag)) {
-        // আগে থাকলে বাদ দিন
-        return prev.filter(f => f !== flag);
-      }
-      // না থাকলে যোগ করুন
-      return [...prev, flag];
-    });
-  };
+//   const handleVisitedFlag = flag => {
+//     setVisitedFlags(prev => {
+//       if (prev.includes(flag)) {
+//          আগে থাকলে বাদ দিন
+//         return prev.filter(f => f !== flag);
+//       }
+//       না থাকলে যোগ করুন
+//       return [...prev, flag];
+//     });
+//   };
+const handleVisitedFlag = flag => {
+  setVisitedFlags(prev =>
+    prev.includes(flag) ? prev.filter(f => f !== flag) : [...prev, flag]
+  );
+};
 
-  //
   const filteredCountries = countries.filter(country => {
     const term = searchCountry.toLowerCase();
 
@@ -138,7 +142,6 @@ const Countries = ({ countriesPromise }) => {
                 country={country}
                 handleVisitedCountries={handleVisitedCountries}
                 handleVisitedFlag={handleVisitedFlag}
-                searchCountry={searchCountry}
                 className='overflow-hidden rounded-lg border border-gray-200 shadow-md'
               />
             ))}
