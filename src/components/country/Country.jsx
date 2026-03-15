@@ -4,19 +4,7 @@ const Country = ({ country, className, handleVisitedCountries }) => {
   const [visited, setVisited] = useState(false);
 
   // console.log(country);
-  const handleVisited = () => {
-    //3rd
-    setVisited(!visited);
-    handleVisitedCountries(country);
-    //basic
-    // if(visited){
-    //   setVisited(false)
-    // }else{
-    //   setVisited(true)
-    // }
-    //2nd
-    // setVisited(visited ? false : true);
-  };
+
   return (
     <div
       className={`${className} ${visited && 'border-2 border-red-600'} flex h-full flex-col`}
@@ -66,14 +54,21 @@ const Country = ({ country, className, handleVisitedCountries }) => {
       {/* Button at the bottom with margin-top auto */}
       <div className='mt-auto p-4'>
         <button
-          onClick={handleVisited}
+          onClick={() => {
+            setVisited(!visited); // toggle local state
+            handleVisitedCountries(country); // pass the actual country object
+          }}
           className={`btn btn-sm ${visited ? 'btn-success' : 'btn-warning'} mb-4 w-full shadow-lg transition-all hover:shadow-xl`}
         >
-          {visited ? 'Visited' : ' Not Visited'}
+          {visited ? 'Visited' : 'Not Visited'}
         </button>
-        <button className='btn btn-sm btn-error w-full shadow-lg transition-all hover:shadow-xl'>
-          Remove
-        </button>
+
+        {/* <button
+          onClick={() => handleVisitedFlag(country.flags?.flags?.png)}
+          className='btn btn-sm btn-error w-full shadow-lg transition-all hover:shadow-xl'
+        >
+          Flags
+        </button> */}
       </div>
     </div>
   );

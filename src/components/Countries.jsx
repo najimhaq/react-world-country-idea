@@ -4,14 +4,27 @@ import Country from './country/Country';
 
 const Countries = ({ countriesPromise }) => {
   const [visitedCountry, setVisitedCountry] = useState([]);
-  const handleVisitedCountries = country => {
-    // console.log('HVC Clicked', country);
-    const newVisitedCountries = [...visitedCountry, country];
-    setVisitedCountry(newVisitedCountries);
-  };
+//   const [visitedFlags, setVisitedFlags] = useState([]);
+  //receive data with use
   const countriesData = use(countriesPromise);
+  //data destructuring
   const countries = countriesData.countries;
-  //   console.log(countries.country.cca3.cca3);
+  //visited button eventlistener
+  const handleVisitedCountries = country => {
+    setVisitedCountry(prev => {
+      if (prev.some(c => c.cca3 === country.cca3)) {
+        return prev.filter(c => c.cca3 !== country.cca3);
+      }
+      return [...prev, country];
+    });
+  };
+  //visited button eventlistener
+//   const handleVisitedFlag=(flag)=>{
+//     const newVisitedFlags = [...visitedFlags,flag]
+//     setVisitedFlags(newVisitedFlags)
+//   }
+
+
   return (
     <div className='min-h-screen bg-linear-to-br from-gray-900 to-gray-800 p-8 py-12'>
       <div className='mx-auto max-w-6xl'>
@@ -22,7 +35,7 @@ const Countries = ({ countriesPromise }) => {
           <h3 className='mb-4 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-center text-2xl font-semibold text-transparent'>
             Total Country Visited : {visitedCountry.length}
           </h3>
-
+          {/* Visited Country */}
           {visitedCountry.length > 0 && (
             <div className='mx-auto max-w-md'>
               <h4 className='mb-3 text-center text-lg font-bold text-green-400'>
@@ -40,6 +53,8 @@ const Countries = ({ countriesPromise }) => {
               </ol>
             </div>
           )}
+          {/* Visited Flags */}
+          
         </div>
 
         {/* Search */}
@@ -79,6 +94,7 @@ const Countries = ({ countriesPromise }) => {
                 key={country.cca3}
                 country={country}
                 handleVisitedCountries={handleVisitedCountries}
+                
                 className='overflow-hidden rounded-lg border border-gray-200 shadow-md'
               />
             ))}
